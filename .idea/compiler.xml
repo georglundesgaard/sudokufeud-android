@@ -17,6 +17,15 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="gen/aa" />
+        <sourceTestOutputDir name="gen/aa-test" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/com/googlecode/androidannotations/androidannotations/2.7/androidannotations-2.7.jar:C:/Users/andersu/.m2/repository/com/googlecode/androidannotations/androidannotations-api/2.7/androidannotations-api-2.7.jar" />
+        </processorPath>
+        <module name="sudokufeud-android" />
+      </profile>
     </annotationProcessing>
   </component>
 </project>

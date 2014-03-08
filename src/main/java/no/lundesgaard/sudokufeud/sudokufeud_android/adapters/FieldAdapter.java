@@ -1,4 +1,4 @@
-package no.lundesgaard.sudokufeud.sudokufeud_android;
+package no.lundesgaard.sudokufeud.sudokufeud_android.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,16 +7,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 
-public class ImageAdapter extends BaseAdapter {
+public class FieldAdapter extends BaseAdapter {
+
     private Context context;
 
-    public ImageAdapter(Context c) {
+    public FieldAdapter(Context c) {
         context = c;
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return 9;
     }
 
     public Object getItem(int position) {
@@ -35,22 +37,9 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             textView = (TextView) inflater.inflate(R.layout.field, null);
             textView.setLayoutParams(new GridView.LayoutParams(100, 100));
-            //textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            //textView.setTextColor(android.R.color.black);
-            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         } else {
             textView = (TextView) convertView;
         }
-        //textView.setBackgroundColor(android.R.color.white);
         return textView;
     }
-
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2
-    };
 }

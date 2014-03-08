@@ -1,4 +1,4 @@
-package no.lundesgaard.sudokufeud.sudokufeud_android;
+package no.lundesgaard.sudokufeud.sudokufeud_android.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

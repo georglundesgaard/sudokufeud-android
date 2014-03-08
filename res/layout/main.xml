@@ -19,7 +19,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/black"
                     >
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square1"
                         android:layout_width="fill_parent"
@@ -28,11 +28,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square2"
                         android:layout_width="fill_parent"
@@ -41,11 +40,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square3"
                         android:layout_width="fill_parent"
@@ -54,7 +52,6 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
@@ -66,7 +63,7 @@
                     android:layout_weight="1"
                     android:background="@android:color/black"
                     >
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square4"
                         android:layout_width="fill_parent"
@@ -75,11 +72,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square5"
                         android:layout_width="fill_parent"
@@ -88,11 +84,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square6"
                         android:layout_width="fill_parent"
@@ -101,7 +96,6 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
@@ -111,7 +105,7 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:background="@android:color/black">
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square7"
                         android:layout_width="fill_parent"
@@ -120,11 +114,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square8"
                         android:layout_width="fill_parent"
@@ -133,11 +126,10 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
-                <no.lundesgaard.sudokufeud.sudokufeud_android.SquareGridView
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square9"
                         android:layout_width="fill_parent"
@@ -146,7 +138,6 @@
                         android:layout_weight="1"
                         android:numColumns="3"
                         android:verticalSpacing="2dp"
-                        android:horizontalSpacing="2dp"
                         android:stretchMode="columnWidth"
                         android:gravity="center"
                         />
@@ -155,10 +146,10 @@
         <RelativeLayout
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
-                android:background="@android:color/"
+                android:background="@android:color/background_light"
                 >
 
-                <no.lundesgaard.sudokufeud.sudokufeud_android.RelativeRadioGroup
+                <no.lundesgaard.sudokufeud.sudokufeud_android.views.RelativeRadioGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -278,7 +269,7 @@
                             android:layout_alignBaseline="@id/tile8"
                             android:layout_margin="2dp"
                             />
-                </no.lundesgaard.sudokufeud.sudokufeud_android.RelativeRadioGroup>
+                </no.lundesgaard.sudokufeud.sudokufeud_android.views.RelativeRadioGroup>
         </RelativeLayout>
 
     </LinearLayout>

@@ -1,4 +1,4 @@
-package no.lundesgaard.sudokufeud.sudokufeud_android;
+package no.lundesgaard.sudokufeud.sudokufeud_android.views;
 
 /*
  * Copyright (C) 2006 The Android Open Source Project
@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 
 /**
  * <p>This class is used to create a multiple-exclusion scope for a set of radio
