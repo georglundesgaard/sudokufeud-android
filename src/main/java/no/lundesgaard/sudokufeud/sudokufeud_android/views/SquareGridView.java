@@ -6,7 +6,6 @@ import android.widget.GridView;
 
 public class SquareGridView extends GridView {
 
-
     public SquareGridView(Context context) {
         super(context);
     }

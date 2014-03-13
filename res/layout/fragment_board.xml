@@ -20,7 +20,6 @@
                     android:background="@android:color/black"
                     >
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -32,7 +31,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square2"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -44,7 +42,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -64,7 +61,6 @@
                     android:background="@android:color/black"
                     >
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square4"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -76,7 +72,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square5"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -88,7 +83,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square6"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -106,7 +100,6 @@
                     android:layout_weight="1"
                     android:background="@android:color/black">
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square7"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -118,7 +111,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square8"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -130,7 +122,6 @@
                         android:gravity="center"
                         />
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView
-                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/square9"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -144,12 +135,14 @@
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
+                android:id="@+id/notBoard"
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
                 android:background="@android:color/background_light"
                 >
 
                 <no.lundesgaard.sudokufeud.sudokufeud_android.views.RelativeRadioGroup
+                        android:id="@+id/radioGroupTiles"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
