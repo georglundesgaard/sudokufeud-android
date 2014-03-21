@@ -52,10 +52,12 @@ public class BoardFragment extends Fragment {
     private OnItemClickListener onFieldClickListener = new OnItemClickListener() {                
     	public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
             int checkedRadioButtonId = radioGroupTiles.getCheckedRadioButtonId();
-            RadioButton checkedRadioButton = (RadioButton) getActivity().findViewById(checkedRadioButtonId);
+            if (checkedRadioButtonId != -1)  {
+                RadioButton checkedRadioButton = (RadioButton) getActivity().findViewById(checkedRadioButtonId);
 
-            ((SquareAdapter) adapterView.getAdapter()).setFieldValue(position,
-                    Integer.parseInt(checkedRadioButton.getText().toString()));            
+                ((SquareAdapter) adapterView.getAdapter()).setField(position,
+                        Integer.parseInt(checkedRadioButton.getText().toString()));
+            }
         }
     };
 
@@ -132,7 +134,7 @@ public class BoardFragment extends Fragment {
             squareValues.addAll(squareRow2);
             squareValues.addAll(squareRow3);
             SquareAdapter squareAdapter = squareAdapters.get(i);
-            squareAdapter.setFieldValues(squareValues);
+            squareAdapter.setFields(squareValues);
         }
     }
 

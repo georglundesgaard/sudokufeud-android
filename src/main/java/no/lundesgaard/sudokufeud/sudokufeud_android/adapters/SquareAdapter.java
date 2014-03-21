@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
+import no.lundesgaard.sudokufeud.sudokufeud_android.model.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +17,19 @@ public class SquareAdapter extends BaseAdapter {
 
     private Context context;
 
-    List<Integer> fieldValues;
+    private List<Field> fields;
 
     public SquareAdapter(Context c) {
         context = c;
-        fieldValues = new ArrayList<Integer>();
+        fields = new ArrayList<Field>();
     }
 
     public int getCount() {
-        return fieldValues.size();
+        return fields.size();
     }
 
-    public Integer getItem(int position) {
-        return fieldValues.get(position);
+    public Field getItem(int position) {
+        return fields.get(position);
     }
 
     public long getItemId(int position) {
@@ -51,7 +52,12 @@ public class SquareAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Integer fieldValue = fieldValues.get(position);
+        Integer fieldValue = getItem(position).getValue();
+
+        if (fields.get(position).isLocked()) {
+            viewHolder.textView.setBackground(context.getResources().getDrawable(R.drawable.field_gradient));
+        }
+
         if (fieldValue != null) {
             viewHolder.textView.setText(fieldValue + "");
         }
@@ -62,15 +68,21 @@ public class SquareAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setFieldValues(List<Integer> fieldList) {
-        fieldValues.clear();
-        fieldValues.addAll(fieldList);
+    public void setFields(List<Integer> fieldList) {
+        fields.clear();
+        for (int i = 0; i < fieldList.size(); i++) {
+            Integer value = fieldList.get(i);
+            boolean locked = (value != null);
+            fields.add(new Field(value, locked, i));
+        }
         notifyDataSetChanged();
     }
 
-    public void setFieldValue(int position, Integer value) {
-    	fieldValues.set(position, value);
-    	notifyDataSetChanged();
+    public void setField(int position, Integer value) {
+    	if (getItem(position).getValue() == null) {
+            fields.set(position, new Field(value, false, position));
+    	    notifyDataSetChanged();
+        }
     }
 
     static class ViewHolder {

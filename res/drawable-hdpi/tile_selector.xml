@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_pressed="true"> <!-- pressed -->
         <shape>
             <gradient
@@ -25,7 +24,12 @@
 
     <item>      <!-- default -->
         <shape>
-            <solid android:color="#E6E6E6" />
+            <gradient
+                    android:startColor="#F7A974"
+                    android:endColor="#F06305"
+                    android:angle="270"
+                    />
+            <corners android:radius="1dp"/>
         </shape>
     </item>
 </selector>
