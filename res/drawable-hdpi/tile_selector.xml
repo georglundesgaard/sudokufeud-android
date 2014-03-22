@@ -3,33 +3,42 @@
     <item android:state_pressed="true"> <!-- pressed -->
         <shape>
             <gradient
-                    android:startColor="#058CF5"
-                    android:centerColor="#0273ED"
+                    android:startColor="#FFFFFF"
+                    android:centerColor="#37ACCC"
                     android:centerY="0.75"
-                    android:endColor="#015DE6"
+                    android:endColor="#37ACCC"
                     android:angle="270" />
+            <corners android:radius="1dp"/>
+            <stroke android:width="1dp"
+                    android:color="#37ACCC"/>
         </shape>
     </item>
 
     <item android:state_checked="true"> <!-- focused -->
         <shape>
             <gradient
-                    android:startColor="#058CF5"
-                    android:centerColor="#0273ED"
+                    android:startColor="#FFFFFF"
+                    android:centerColor="#37ACCC"
                     android:centerY="0.75"
-                    android:endColor="#015DE6"
+                    android:endColor="#37ACCC"
                     android:angle="270" />
+            <corners android:radius="1dp"/>
+            <stroke android:width="1dp"
+                    android:color="#37ACCC"/>
         </shape>
     </item>
 
     <item>      <!-- default -->
         <shape>
             <gradient
-                    android:startColor="#F7A974"
+                    android:startColor="#FFFFFF"
+                    android:centerColor="#F7A974"
                     android:endColor="#F06305"
                     android:angle="270"
                     />
             <corners android:radius="1dp"/>
+            <stroke android:width="1dp"
+                    android:color="#F06305"/>
         </shape>
     </item>
 </selector>

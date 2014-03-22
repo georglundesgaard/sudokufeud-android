@@ -3,12 +3,14 @@ package no.lundesgaard.sudokufeud.sudokufeud_android.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 import no.lundesgaard.sudokufeud.sudokufeud_android.adapters.SquareAdapter;
-import no.lundesgaard.sudokufeud.sudokufeud_android.events.BoardFetchedEvent;
+import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
+import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
 import no.lundesgaard.sudokufeud.sudokufeud_android.tasks.CallGamesServiceTask;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.BusProvider;
-import no.lundesgaard.sudokufeud.sudokufeud_android.views.RelativeRadioGroup;
 import no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -36,10 +38,16 @@ public class BoardFragment extends Fragment {
             square6, square7, square8, square9;
 
     @ViewById
+    RadioButton tile1, tile2, tile3, tile4, tile5,
+            tile6, tile7;
+
+    @ViewById
     RelativeLayout notBoard;
 
     @ViewById
-    RelativeRadioGroup radioGroupTiles;
+    RadioGroup radioGroupTiles;
+//    RelativeRadioGroup radioGroupTiles;
+
 
     List<SquareAdapter> squareAdapters;
 
@@ -57,7 +65,10 @@ public class BoardFragment extends Fragment {
 
                 ((SquareAdapter) adapterView.getAdapter()).setField(position,
                         Integer.parseInt(checkedRadioButton.getText().toString()));
+
+                checkedRadioButton.setVisibility(View.GONE);
             }
+
         }
     };
 
@@ -100,9 +111,10 @@ public class BoardFragment extends Fragment {
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(AD_UNIT_ID);
 
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1, -1);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        layoutParams.addRule(RelativeLayout.BELOW, R.id.radioGroupTiles);
+        layoutParams.addRule(RelativeLayout.BELOW, R.id.buttons);
         adView.setLayoutParams(layoutParams);
 
         // Add the AdView to the view hierarchy. The view will have no size
@@ -121,9 +133,25 @@ public class BoardFragment extends Fragment {
     }
 
     @Subscribe
-    public void setFieldValues(BoardFetchedEvent boardFetchedEvent) {
-        List<Integer> board = boardFetchedEvent.getBoard();
+    public void handleGameFetched(GameFetchedEvent gameFetchedEvent) {
+        Game game = gameFetchedEvent.getGame();
 
+        initializeBoard(game.getBoard());
+
+        initializeTiles(game.getAvailablePieces());
+    }
+
+    private void initializeTiles(List<Integer> availablePieces) {
+        tile1.setText(availablePieces.get(0) + "");
+        tile2.setText(availablePieces.get(1) + "");
+        tile3.setText(availablePieces.get(2) + "");
+        tile4.setText(availablePieces.get(3) + "");
+        tile5.setText(availablePieces.get(4) + "");
+        tile6.setText(availablePieces.get(5) + "");
+        tile7.setText(availablePieces.get(6) + "");
+    }
+
+    private void initializeBoard(List<Integer> board) {
         for (int i = 0; i < squareAdapters.size(); i++) {
             List<Integer> squareValues = new ArrayList<Integer>();
             int start = (i/3)*18 + i*3;

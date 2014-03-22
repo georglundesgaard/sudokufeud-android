@@ -1,6 +1,6 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.tasks;
 
-import no.lundesgaard.sudokufeud.sudokufeud_android.events.BoardFetchedEvent;
+import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.GamesServiceClient;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
 
@@ -16,6 +16,6 @@ public class CallGamesServiceTask extends BaseTask {
 
         Game game = gamesServiceClient.getGame();
 
-        updateUi(new BoardFetchedEvent(game.getBoard()));
+        updateUi(new GameFetchedEvent(game));
     }
 }
