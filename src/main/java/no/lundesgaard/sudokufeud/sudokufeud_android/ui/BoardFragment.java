@@ -1,6 +1,7 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.view.ViewGroup;
@@ -8,9 +9,11 @@ import android.widget.RadioGroup;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 import no.lundesgaard.sudokufeud.sudokufeud_android.adapters.SquareAdapter;
 import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
+import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
 import no.lundesgaard.sudokufeud.sudokufeud_android.tasks.CallGamesServiceTask;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.BusProvider;
+import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -33,13 +36,11 @@ import com.squareup.otto.Subscribe;
 @EFragment(R.layout.fragment_board)
 public class BoardFragment extends Fragment {
 
-    @ViewById
-    SquareGridView square1, square2, square3, square4, square5,
-            square6, square7, square8, square9;
+	@ViewById
+    SquareGridView square1, square2, square3, square4, square5, square6, square7, square8, square9;
 
     @ViewById
-    RadioButton tile1, tile2, tile3, tile4, tile5,
-            tile6, tile7;
+    RadioButton tile1, tile2, tile3, tile4, tile5, tile6, tile7;
 
     @ViewById
     RelativeLayout notBoard;
@@ -57,7 +58,7 @@ public class BoardFragment extends Fragment {
     /** The view to show the ad. */
     private AdView adView;
 
-    private OnItemClickListener onFieldClickListener = new OnItemClickListener() {                
+    private OnItemClickListener onFieldClickListener = new OnItemClickListener() {
     	public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
             int checkedRadioButtonId = radioGroupTiles.getCheckedRadioButtonId();
             if (checkedRadioButtonId != -1)  {
@@ -75,33 +76,29 @@ public class BoardFragment extends Fragment {
     /* Your ad unit id. Replace with your actual ad unit id. */
     private static final String AD_UNIT_ID = "ca-app-pub-9396891120929103/5003937078";
 
+	List<SquareGridView> squareList;
+
     @AfterViews
     protected void init() {
+		squareList =  new ArrayList<SquareGridView>();
+		squareList.add(square1);
+		squareList.add(square2);
+		squareList.add(square3);
+		squareList.add(square4);
+		squareList.add(square5);
+		squareList.add(square6);
+		squareList.add(square7);
+		squareList.add(square8);
+		squareList.add(square9);
+
         squareAdapters = new ArrayList<SquareAdapter>();
-        for (int i = 0; i < 9; i++) {
-            SquareAdapter squareAdapter = new SquareAdapter(getActivity());
-            squareAdapters.add(squareAdapter);
+        for (int i = 0; i < Constants.NUMBER_OF_SQUARES; i++) {
+			final SquareAdapter squareAdapter = new SquareAdapter(getActivity(), i);
+			squareAdapters.add(squareAdapter);
+			final SquareGridView squareGridView = squareList.get(i);
+			squareGridView.setAdapter(squareAdapter);
+			squareGridView.setOnItemClickListener(onFieldClickListener);
         }
-
-        square1.setAdapter(squareAdapters.get(0));
-        square2.setAdapter(squareAdapters.get(1));
-        square3.setAdapter(squareAdapters.get(2));
-        square4.setAdapter(squareAdapters.get(3));
-        square5.setAdapter(squareAdapters.get(4));
-        square6.setAdapter(squareAdapters.get(5));
-        square7.setAdapter(squareAdapters.get(6));
-        square8.setAdapter(squareAdapters.get(7));
-        square9.setAdapter(squareAdapters.get(8));
-
-        square1.setOnItemClickListener(onFieldClickListener);
-        square2.setOnItemClickListener(onFieldClickListener);
-        square3.setOnItemClickListener(onFieldClickListener);
-        square4.setOnItemClickListener(onFieldClickListener);
-        square5.setOnItemClickListener(onFieldClickListener);
-        square6.setOnItemClickListener(onFieldClickListener);
-        square7.setOnItemClickListener(onFieldClickListener);
-        square8.setOnItemClickListener(onFieldClickListener);
-        square9.setOnItemClickListener(onFieldClickListener);
 
         createAd();
     }
@@ -136,10 +133,14 @@ public class BoardFragment extends Fragment {
     public void handleGameFetched(GameFetchedEvent gameFetchedEvent) {
         Game game = gameFetchedEvent.getGame();
 
-        initializeBoard(game.getBoard());
+		if (game != null) {
+			initializeBoard(game.getBoard());
 
-        initializeTiles(game.getAvailablePieces());
-    }
+			initializeTiles(game.getAvailablePieces());
+		} else {
+			// todo: Klag på Georg
+		}
+   }
 
     private void initializeTiles(List<Integer> availablePieces) {
         tile1.setText(availablePieces.get(0) + "");
@@ -151,19 +152,22 @@ public class BoardFragment extends Fragment {
         tile7.setText(availablePieces.get(6) + "");
     }
 
-    private void initializeBoard(List<Integer> board) {
-        for (int i = 0; i < squareAdapters.size(); i++) {
-            List<Integer> squareValues = new ArrayList<Integer>();
-            int start = (i/3)*18 + i*3;
-            List<Integer> squareRow1 = board.subList(start, start + 3);
-            List<Integer> squareRow2 = board.subList(start + 9, start + 12);
-            List<Integer> squareRow3 = board.subList(start + 18, start + 21);
-            squareValues.addAll(squareRow1);
-            squareValues.addAll(squareRow2);
-            squareValues.addAll(squareRow3);
-            SquareAdapter squareAdapter = squareAdapters.get(i);
-            squareAdapter.setFields(squareValues);
-        }
+    private void initializeBoard(List<Integer> boardNumbers) {
+
+		if (boardNumbers == null || boardNumbers.size() < (Constants.BOARD_HEIGHT * Constants.BOARD_WIDTH))
+			return;
+
+		Board board = new Board(boardNumbers);
+
+		for (SquareAdapter squareAdapter : squareAdapters) {
+			Integer squareValues[] = new Integer[Constants.BOARD_HEIGHT*Constants.BOARD_WIDTH];
+			int square = squareAdapter.getSquarePosition();
+
+			for (int pos = 0; pos < Constants.SQUARE_SIZE; pos++)
+				squareValues[pos] = board.getFieldNumber(square,pos);
+
+			squareAdapter.setFields(Arrays.asList(squareValues));
+		}
     }
 
     @Override
