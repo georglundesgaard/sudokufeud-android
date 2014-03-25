@@ -16,15 +16,21 @@ import java.util.List;
 public class SquareAdapter extends BaseAdapter {
 
     private Context context;
+	private int squarePosition;
 
-    private List<Field> fields;
+	private List<Field> fields;
 
-    public SquareAdapter(Context c) {
+    public SquareAdapter(Context c, int squarePosition) {
         context = c;
-        fields = new ArrayList<Field>();
+		this.squarePosition = squarePosition;
+		fields = new ArrayList<Field>();
     }
 
-    public int getCount() {
+	public int getSquarePosition() {
+		return squarePosition;
+	}
+
+	public int getCount() {
         return fields.size();
     }
 

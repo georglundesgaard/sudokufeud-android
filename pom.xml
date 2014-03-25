@@ -134,7 +134,7 @@
                             <includes>
                                 <include>${project.build.directory}/${project.artifactId}.apk</include>
                             </includes>
-                            <keystore>C:\Users\andersu\SudokuFeud\sudokufeud-android\sudokufeud-android.jks</keystore>
+                            <keystore>sudokufeud-android.jks</keystore>
                             <alias>sudokufeud</alias>
                             <storepass>sudokufeud1234</storepass>
                             <keypass>sudokufeud1234</keypass>
