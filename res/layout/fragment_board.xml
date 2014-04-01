@@ -153,99 +153,31 @@
                         >
                     <RadioButton
                             android:id="@+id/tile1"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="1"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile2"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="2"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_toRightOf="@id/tile1"
-                            android:layout_alignBaseline="@id/tile1"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile3"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="3"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_alignBaseline="@id/tile2"
-                            android:layout_toRightOf="@id/tile2"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile4"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="4"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_below="@id/tile1"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile5"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="5"
-                            android:layout_toRightOf="@id/tile4"
-                            android:layout_alignBaseline="@id/tile4"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile6"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="6"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_toRightOf="@id/tile5"
-                            android:layout_alignBaseline="@id/tile5"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
                     <RadioButton
                             android:id="@+id/tile7"
-                            android:layout_height="40dp"
-                            android:layout_width="40dp"
-                            android:background="@drawable/tile_selector"
-                            android:text="7"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp"
-                            android:layout_below="@id/tile4"
-                            android:layout_margin="2dp"
+                            style="@style/tile"
                             />
             </RadioGroup>
             <RelativeLayout
@@ -263,7 +195,7 @@
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         android:layout_margin="20dp"
-                        android:background="@drawable/button_gradient"/>
+                        android:background="@drawable/button_submit_gradient"/>
             </RelativeLayout>
         </RelativeLayout>
 

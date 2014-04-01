@@ -15,7 +15,7 @@ public class GamesServiceClient {
         GamesService gamesService = restAdapter.create(GamesService.class);
 
         try {
-            Game game = gamesService.getGame("Basic YW5kZXJzOmFuZGVyczEyMw==", "e21b220f-76c5-408a-a667-290f78a9133f");
+            Game game = gamesService.getGame("Basic Z2VpcjpnZWlyMTIz", "39016be1-0108-407c-8a4f-aaa93c0bda69");
             System.out.println(game.getBoard());
             System.out.println(game.getAvailablePieces());
             return game;
@@ -25,4 +25,6 @@ public class GamesServiceClient {
         }
         return null;
     }
+
+
 }

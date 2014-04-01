@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_pressed="true"> <!-- pressed -->
         <shape>
             <gradient
-                    android:startColor="#FFFFFF"
-                    android:centerColor="#37ACCC"
-                    android:centerY="0.75"
-                    android:endColor="#37ACCC"
+                    android:startColor="#B0B0AE"
+                    android:centerColor="#787878"
+                    android:endColor="#000000"
                     android:angle="270" />
             <corners android:radius="1dp"/>
             <stroke android:width="1dp"
-                    android:color="#37ACCC"/>
+                    android:color="#000000"/>
         </shape>
     </item>
 
-    <item android:state_checked="true"> <!-- focused -->
+    <item android:state_checked="true"> <!-- checked -->
         <shape>
             <gradient
-                    android:startColor="#FFFFFF"
-                    android:centerColor="#37ACCC"
-                    android:centerY="0.75"
-                    android:endColor="#37ACCC"
+                    android:startColor="#B0B0AE"
+                    android:centerColor="#787878"
+                    android:endColor="#000000"
                     android:angle="270" />
             <corners android:radius="1dp"/>
             <stroke android:width="1dp"
-                    android:color="#37ACCC"/>
+                    android:color="#000000"/>
         </shape>
     </item>
 
@@ -32,13 +31,13 @@
         <shape>
             <gradient
                     android:startColor="#FFFFFF"
-                    android:centerColor="#F7A974"
-                    android:endColor="#F06305"
+                    android:centerColor="#EBEBEB"
+                    android:endColor="#B0B0AE"
                     android:angle="270"
                     />
             <corners android:radius="1dp"/>
             <stroke android:width="1dp"
-                    android:color="#F06305"/>
+                    android:color="#000000"/>
         </shape>
     </item>
 </selector>

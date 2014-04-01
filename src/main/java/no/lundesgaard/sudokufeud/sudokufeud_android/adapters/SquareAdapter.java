@@ -84,11 +84,13 @@ public class SquareAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setField(int position, Integer value) {
+    public boolean setField(int position, Integer value) {
     	if (!getItem(position).isLocked()) {
             fields.set(position, new Field(value, false, position));
     	    notifyDataSetChanged();
+            return true;
         }
+        return false;
     }
 
     static class ViewHolder {

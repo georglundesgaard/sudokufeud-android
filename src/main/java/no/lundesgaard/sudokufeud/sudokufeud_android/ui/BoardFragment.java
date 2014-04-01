@@ -11,8 +11,10 @@ import no.lundesgaard.sudokufeud.sudokufeud_android.adapters.SquareAdapter;
 import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
+import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Move;
 import no.lundesgaard.sudokufeud.sudokufeud_android.tasks.CallGamesServiceTask;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.BusProvider;
+import no.lundesgaard.sudokufeud.sudokufeud_android.util.RoundUtil;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView;
 
@@ -36,11 +38,13 @@ import com.squareup.otto.Subscribe;
 @EFragment(R.layout.fragment_board)
 public class BoardFragment extends Fragment {
 
-	@ViewById
-    SquareGridView square1, square2, square3, square4, square5, square6, square7, square8, square9;
+    @ViewById
+    SquareGridView square1, square2, square3, square4, square5,
+            square6, square7, square8, square9;
 
     @ViewById
-    RadioButton tile1, tile2, tile3, tile4, tile5, tile6, tile7;
+    RadioButton tile1, tile2, tile3, tile4, tile5,
+            tile6, tile7;
 
     @ViewById
     RelativeLayout notBoard;
@@ -55,19 +59,24 @@ public class BoardFragment extends Fragment {
     @Bean
     CallGamesServiceTask callGamesServiceTask;
 
+    private RoundUtil roundUtil;
+
     /** The view to show the ad. */
     private AdView adView;
 
-    private OnItemClickListener onFieldClickListener = new OnItemClickListener() {
+    private OnItemClickListener onFieldClickListener = new OnItemClickListener() {                
     	public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
             int checkedRadioButtonId = radioGroupTiles.getCheckedRadioButtonId();
             if (checkedRadioButtonId != -1)  {
                 RadioButton checkedRadioButton = (RadioButton) getActivity().findViewById(checkedRadioButtonId);
 
-                ((SquareAdapter) adapterView.getAdapter()).setField(position,
+                boolean fieldUpdated = ((SquareAdapter) adapterView.getAdapter()).setField(position,
                         Integer.parseInt(checkedRadioButton.getText().toString()));
 
-                checkedRadioButton.setVisibility(View.GONE);
+                if (fieldUpdated) {
+                    checkedRadioButton.setVisibility(View.INVISIBLE);
+                    radioGroupTiles.clearCheck();
+                }
             }
 
         }
@@ -100,6 +109,7 @@ public class BoardFragment extends Fragment {
 			squareGridView.setOnItemClickListener(onFieldClickListener);
         }
 
+        roundUtil = new RoundUtil();
         createAd();
     }
 
@@ -160,7 +170,7 @@ public class BoardFragment extends Fragment {
 		Board board = new Board(boardNumbers);
 
 		for (SquareAdapter squareAdapter : squareAdapters) {
-			Integer squareValues[] = new Integer[Constants.BOARD_HEIGHT*Constants.BOARD_WIDTH];
+			Integer squareValues[] = new Integer[Constants.SQUARE_SIZE];
 			int square = squareAdapter.getSquarePosition();
 
 			for (int pos = 0; pos < Constants.SQUARE_SIZE; pos++)

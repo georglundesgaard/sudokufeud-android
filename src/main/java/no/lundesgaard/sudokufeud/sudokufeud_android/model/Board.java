@@ -16,7 +16,7 @@ public class Board {
 	public Integer getNumber(int x, int y) {
 		if (x < 0 || x >= Constants.BOARD_WIDTH ||
 				y < 0 || y >= Constants.BOARD_HEIGHT)
-			throw new IllegalArgumentException("ulovelig posisjon (" + x + "," + y + ")");
+			throw new IllegalArgumentException("Illegal position (" + x + "," + y + ")");
 
 		return board.get(x + y * Constants.BOARD_WIDTH);
 	}
@@ -24,7 +24,7 @@ public class Board {
 	public void storeNumber(int x, int y, Integer value) {
 		if (x < 0 || x >= Constants.BOARD_WIDTH ||
 				y < 0 || y >= Constants.BOARD_HEIGHT)
-			throw new IllegalArgumentException("ulovelig posisjon (" + x + "," + y + ")");
+			throw new IllegalArgumentException("Illegal position (" + x + "," + y + ")");
 
 		board.set(x + y * Constants.BOARD_WIDTH, value);
 	}

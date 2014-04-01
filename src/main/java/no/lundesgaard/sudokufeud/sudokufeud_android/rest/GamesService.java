@@ -25,6 +25,4 @@ public interface GamesService {
     @GET("games/{gameId}/rounds")
     List<Round> getPlayedRounds(@Header("Authorization") String authorization);
 
-
-
 }
