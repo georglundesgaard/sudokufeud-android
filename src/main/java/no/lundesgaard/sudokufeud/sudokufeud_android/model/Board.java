@@ -3,9 +3,10 @@ package no.lundesgaard.sudokufeud.sudokufeud_android.model;
 import android.util.Log;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Board {
+public class Board implements Serializable {
 
 	private List<Integer> board;
 
@@ -30,7 +31,6 @@ public class Board {
 	}
 
 	public Integer getFieldNumber (int square, int position) {
-		Log.e(Constants.TAG, "getFieldNumber (" + square + "," + position + ") called");
 		int x = (square % 3) * 3  + (position % 3);
 		int y = (square / 3) * 3 + (position / 3);
 		return getNumber(x,y);
@@ -40,5 +40,12 @@ public class Board {
 		int x = (square % 3) * 3  + (position % 3);
 		int y = (square / 3) * 3 + (position / 3);
 		storeNumber(x,y, value);
+	}
+
+	@Override
+	public String toString() {
+		return "Board{" +
+				"board=" + board +
+				'}';
 	}
 }

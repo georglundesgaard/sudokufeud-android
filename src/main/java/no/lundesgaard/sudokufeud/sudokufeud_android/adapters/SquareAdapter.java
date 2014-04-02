@@ -1,6 +1,7 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Field;
+import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,11 +86,13 @@ public class SquareAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setField(int position, Integer value) {
+    public boolean setField(int position, Integer value) {
     	if (!getItem(position).isLocked()) {
             fields.set(position, new Field(value, false, position));
     	    notifyDataSetChanged();
-        }
+			return true;
+        } else
+			return false;
     }
 
     static class ViewHolder {

@@ -7,5 +7,5 @@ public class Constants {
 	public static final int BOARD_HEIGHT = 9;
 
 	public static final int SQUARE_SIZE = 9;
-	public static String TAG = "no.lundesgaard.sudokufeud.sudokufeud_android";
+	public static String TAG = "no.gih";
 }

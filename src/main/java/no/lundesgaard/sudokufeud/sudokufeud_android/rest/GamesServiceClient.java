@@ -1,6 +1,8 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.rest;
 
+import android.util.Log;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
+import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 
@@ -15,13 +17,13 @@ public class GamesServiceClient {
         GamesService gamesService = restAdapter.create(GamesService.class);
 
         try {
-            Game game = gamesService.getGame("Basic YW5kZXJzOmFuZGVyczEyMw==", "e21b220f-76c5-408a-a667-290f78a9133f");
-            System.out.println(game.getBoard());
-            System.out.println(game.getAvailablePieces());
+            Game game = gamesService.getGame("Basic Z2VpcjpnZWlyMTIz", "39016be1-0108-407c-8a4f-aaa93c0bda69");
+			Log.i(Constants.TAG, "getGame: fikk board " + game.getBoard());
+			Log.i(Constants.TAG, "getGame: fikk AvailablePieces " + game.getAvailablePieces());
             return game;
         }
         catch (RetrofitError e) {
-            e.printStackTrace();
+			Log.e(Constants.TAG, "getmail Feilet",e);
         }
         return null;
     }
