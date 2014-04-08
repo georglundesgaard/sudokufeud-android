@@ -71,6 +71,7 @@ public class Board implements Serializable {
 		if (x < 0 || x >= Constants.BOARD_WIDTH ||
 				y < 0 || y >= Constants.BOARD_HEIGHT)
 			throw new IllegalArgumentException("Illegal position (" + x + "," + y + ")");
+    }
 
 	public Cell getFieldCell (int square, int position) {
 		int x = (square % 3) * 3 + (position % 3);
