@@ -6,7 +6,6 @@ import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 
 import no.lundesgaard.sudokufeud.sudokufeud_android.SavedState;
 import no.lundesgaard.sudokufeud.sudokufeud_android.State;
-import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import org.androidannotations.annotations.*;
 
@@ -26,14 +25,12 @@ public class MainActivity extends Activity {
 		super.onCreate(savedBundle);
 		Log.i(Constants.TAG, "onCreate: savedState=" + savedState);
 		if (savedState != null) {
-			state.setOriginalBoard(savedState.getOriginalBoard());
-			state.setCurrentBoard(savedState.getCurrentBoard());
+			state.setBoard(savedState.getBoard());
 		} else {
 			if (savedBundle != null) {
 				savedState = (State) savedBundle.get("savedState");
 				if (savedState != null) {
-					state.setCurrentBoard(savedState.getCurrentBoard());
-					state.setOriginalBoard(savedState.getOriginalBoard());
+					state.setBoard(savedState.getBoard());
 					Log.i(Constants.TAG,"hentet ut savedstate fra bundle");
 				} else
 					Log.w(Constants.TAG, "onCreate: savedState var tom/manglet");
@@ -61,8 +58,7 @@ public class MainActivity extends Activity {
 		Log.i(Constants.TAG, "MainActivity:onDestroy() kallt");
 		if (savedState != null) {
 			if (state != null) {
-				savedState.setCurrentBoard(state.getCurrentBoard());
-				savedState.setOriginalBoard(state.getOriginalBoard());
+				savedState.setBoard(state.getBoard());
 			}
 		}
 		super.onDestroy();

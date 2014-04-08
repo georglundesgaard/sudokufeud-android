@@ -5,43 +5,43 @@ import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class SavedState implements Serializable {
-	private Board originalBoard;
-	private Board currentBoard;
+	private Board board = null;
+	List<Integer> availablePieces = null;
 
 	public SavedState() {
 		Log.i(Constants.TAG, "SavedState contructed");
 	}
 
-	public Board getOriginalBoard() {
-		Log.i(Constants.TAG, "getOriginalBoard called. originalBoard=" + originalBoard);
-		return originalBoard;
+	public Board getBoard() {
+		Log.i(Constants.TAG, "getBoard called. board=" + board);
+		return board;
 	}
 
-	public void setOriginalBoard(Board originalBoard) {
-		Log.i(Constants.TAG, "setOriginalBoard called. old=" + this.originalBoard + ", new=" + originalBoard);
-		this.originalBoard = originalBoard;
+	public void setBoard(Board board) {
+		Log.i(Constants.TAG, "setBoard called. old=" + this.board + ", new=" + board);
+		this.board = board;
 	}
 
-	public Board getCurrentBoard() {
-		Log.i(Constants.TAG, "getCurrentBoard called. currentBoard=" + currentBoard);
-		return currentBoard;
+	public List<Integer> getAvailablePieces() {
+		return availablePieces;
 	}
 
-	public void setCurrentBoard(Board currentBoard) {
-		Log.i(Constants.TAG, "setCurrentBoard called. old=" + this.currentBoard + ", new=" + currentBoard);
-		this.currentBoard = currentBoard;
+	public void setAvailablePieces(List<Integer> availablePieces) {
+		this.availablePieces = availablePieces;
 	}
 
 	public boolean isFilled() {
-		return originalBoard != null;
+		return board != null;
 	}
 
 	@Override
 	public String toString() {
-		return "State{" +
-				"originalBoard=" + originalBoard +
+		return "SavedState{" +
+				"board=" + board +
+				", availablePieces=" + availablePieces +
 				'}';
 	}
 }
