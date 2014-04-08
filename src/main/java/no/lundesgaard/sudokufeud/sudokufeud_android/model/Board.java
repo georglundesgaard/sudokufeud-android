@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Board implements Serializable {
 
-	private Cell board[];
+	private Field board[];
 
 	public Board() {
-		board = new Cell[Constants.NUMBER_OF_CELLS];
+		board = new Field[Constants.NUMBER_OF_CELLS];
 	}
 
 	public void populateIntitialNumbers(List<Integer> boardNumbers) {
@@ -23,12 +23,12 @@ public class Board implements Serializable {
 			for (int x = 0; x < Constants.BOARD_WIDTH; x++) {
 				final int location = y * Constants.BOARD_WIDTH + x;
 				if (boardNumbers.get(location) != null) {
-					board[location] = new Cell(boardNumbers.get(location),true, null);
+					board[location] = new Field(boardNumbers.get(location),true, null);
 				}
 			}
 	}
 
-	public Cell getCell(int x, int y) {
+	public Field getCell(int x, int y) {
 		if (x < 0 || x >= Constants.BOARD_WIDTH ||
 				y < 0 || y >= Constants.BOARD_HEIGHT)
 			throw new IllegalArgumentException("Illegal position (" + x + "," + y + ")");
@@ -37,9 +37,9 @@ public class Board implements Serializable {
 	}
 
 	public Integer getNumber(int x, int y) {
-		final Cell cell = getCell(x,y);
-		if (cell != null)
-			return cell.getValue();
+		final Field field = getCell(x,y);
+		if (field != null)
+			return field.getValue();
 
 		return null;
 	}
@@ -56,11 +56,11 @@ public class Board implements Serializable {
 			board.set(x + y * Constants.BOARD_WIDTH, new Cell(value, false, id));
 	}
 */
-	private void storeCell(int x, int y, Cell newcell) {
+	private void storeCell(int x, int y, Field newcell) {
 		validateXY(x,y);
-		final Cell cell = getCell(x, y);
-		if (cell != null) {
-			if (cell.isLocked())
+		final Field field = getCell(x, y);
+		if (field != null) {
+			if (field.isLocked())
 				throw new IllegalArgumentException("Cell (" + x + "," + y + ") is read only");
 		}
 
@@ -73,7 +73,7 @@ public class Board implements Serializable {
 			throw new IllegalArgumentException("Illegal position (" + x + "," + y + ")");
     }
 
-	public Cell getFieldCell (int square, int position) {
+	public Field getField(int square, int position) {
 		int x = (square % 3) * 3 + (position % 3);
 		int y = (square / 3) * 3 + (position / 3);
 		return getCell(x,y);
@@ -85,10 +85,10 @@ public class Board implements Serializable {
 		return getNumber(x, y);
 	}
 
-	public void storeFieldCell(int square, int position, Cell cell) {
+	public void storeFieldCell(int square, int position, Field field) {
 		int x = (square % 3) * 3 + (position % 3);
 		int y = (square / 3) * 3 + (position / 3);
-		storeCell(x,y,cell);
+		storeCell(x,y, field);
 	}
 /*
 	public void storeFieldNumber(int square, int position, Integer value, Integer id) {
@@ -97,24 +97,24 @@ public class Board implements Serializable {
 		storeNumber(x,y, value, id);
 	}
 */
-	public Cell findCellById(int id) {
-		for (Cell cell : board)
-			if (cell != null && cell.getId() != null && cell.getId() == id)
-				return cell;
+	public Field findCellById(int id) {
+		for (Field field : board)
+			if (field != null && field.getId() != null && field.getId() == id)
+				return field;
 
 		return null;
 	}
 
-	public void freeCell(Cell cellToFree) {
-		int pos = getIndex(cellToFree);
+	public void freeCell(Field fieldToFree) {
+		int pos = getIndex(fieldToFree);
 		if (pos >= 0)
 			board[pos] = null;
 		else
-			throw new IllegalArgumentException("Cell (" + cellToFree + ") is unknown");
+			throw new IllegalArgumentException("Cell (" + fieldToFree + ") is unknown");
 	}
 
-	public int getField(Cell cell) {
-		int pos = getIndex(cell);
+	public int getSquare(Field field) {
+		int pos = getIndex(field);
 		if (pos >= 0) {
 			int row = pos / Constants.BOARD_WIDTH;
 			int col = pos - row * Constants.BOARD_WIDTH;
@@ -124,9 +124,9 @@ public class Board implements Serializable {
 		}
 	}
 
-	private int getIndex(Cell cell) {
+	private int getIndex(Field field) {
 		for (int i = 0; i < board.length; i++)
-			if (cell.equals(board[i])) {
+			if (field.equals(board[i])) {
 				return i;
 			}
 		return -1;

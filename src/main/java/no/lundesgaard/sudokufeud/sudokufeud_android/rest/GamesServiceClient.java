@@ -24,13 +24,13 @@ public class GamesServiceClient {
         GamesService gamesService = restAdapter.create(GamesService.class);
 
         try {
-            Game game = gamesService.getGame("Basic YW5kZXJzOmFuZGVyczEyMw==", "405f9ec3-e379-49d4-89d6-3ec4f1cee593");
+            Game game = gamesService.getGame("Basic Z2VpcjpnZWlyMTIz", "405f9ec3-e379-49d4-89d6-3ec4f1cee593");
 			Log.i(Constants.TAG, "getGame: fikk board " + game.getBoard());
 			Log.i(Constants.TAG, "getGame: fikk AvailablePieces " + game.getAvailablePieces());
             return game;
         }
         catch (RetrofitError e) {
-			Log.e(Constants.TAG, "getmail Feilet",e);
+			Log.e(Constants.TAG, "getGame Feilet: " + e.getResponse().getStatus() + ":" + e.getResponse().getReason(),e);
         }
         return null;
     }

@@ -1,0 +1,26 @@
+
+1. Login/registering Anders
+2. starte et spill	Anders
+3. Vise invitasjoner og pågående spill Anders
+4. akseptere spill Anders
+
+5. utføre runde(flytte brikker) GIH
+	- trekke tilbake/flytte spilt tall
+	- fikse bugs rund misting av brikke
+
+6. Vise spillere/tur GIH/Anders
+7. vise score GIH/Anders
+
+8. executeRound (commite runden) GIH
+9. persistere spillet og bruke det ved resume GIH
+
+10. drag and drop
+11. whistles & bells
+12. tilpasse små/store skjermer
+
+20. IOS versjon
+
+
+
+server:
+	- starte spill mot en tilfeldig motstander (samme nivå).

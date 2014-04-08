@@ -9,7 +9,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
-import no.lundesgaard.sudokufeud.sudokufeud_android.model.Cell;
+import no.lundesgaard.sudokufeud.sudokufeud_android.model.Field;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 
 public class SquareAdapter extends BaseAdapter {
@@ -33,9 +33,9 @@ public class SquareAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Cell getItem(int position) {
+	public Field getItem(int position) {
 		if (board != null)
-	        return board.getFieldCell(squarePosition, position);
+	        return board.getField(squarePosition, position);
 		else
 			return null;
     }
@@ -61,11 +61,11 @@ public class SquareAdapter extends BaseAdapter {
         }
 
 		if (board != null) {
-			Cell cell = board.getFieldCell(squarePosition, position);
-			if (cell != null) {
-				Integer fieldValue = cell.getValue();
+			Field field = board.getField(squarePosition, position);
+			if (field != null) {
+				Integer fieldValue = field.getValue();
 
-				if (cell.isLocked()) {
+				if (field.isLocked()) {
 					viewHolder.textView.setBackground(context.getResources().getDrawable(R.drawable.field_gradient));
 				}
 

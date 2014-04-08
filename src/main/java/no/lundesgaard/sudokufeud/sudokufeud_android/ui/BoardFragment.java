@@ -11,12 +11,10 @@ import no.lundesgaard.sudokufeud.sudokufeud_android.State;
 import no.lundesgaard.sudokufeud.sudokufeud_android.adapters.SquareAdapter;
 import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
-import no.lundesgaard.sudokufeud.sudokufeud_android.model.Cell;
+import no.lundesgaard.sudokufeud.sudokufeud_android.model.Field;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
-import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Move;
 import no.lundesgaard.sudokufeud.sudokufeud_android.tasks.CallGamesServiceTask;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.BusProvider;
-import no.lundesgaard.sudokufeud.sudokufeud_android.util.RoundUtil;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView;
 
@@ -37,13 +35,11 @@ import com.squareup.otto.Subscribe;
 @EFragment(R.layout.fragment_board)
 public class BoardFragment extends Fragment {
 
-    @ViewById
-    SquareGridView square1, square2, square3, square4, square5,
-            square6, square7, square8, square9;
+	@ViewById
+	SquareGridView square1, square2, square3, square4, square5, square6, square7, square8, square9;
 
-    @ViewById
-    RadioButton tile1, tile2, tile3, tile4, tile5,
-            tile6, tile7;
+	@ViewById
+	RadioButton tile1, tile2, tile3, tile4, tile5, tile6, tile7;
 
 	@ViewById
 	RelativeLayout notBoard;
@@ -74,34 +70,34 @@ public class BoardFragment extends Fragment {
 				final Integer verdi = Integer.parseInt(checkedRadioButton.getText().toString());
 				final Board board = state.getBoard();
 
-				final Cell destinationCell = board.getFieldCell(adapter.getSquarePosition(), position);
+				final Field destinationField = board.getField(adapter.getSquarePosition(), position);
 
 				// ikke lov å skrive til en låst celle
-				if (destinationCell == null || !destinationCell.isLocked()) {
+				if (destinationField == null || !destinationField.isLocked()) {
 
 					// se om denne id'en er brukt andre steder
-					final Cell usedCell = board.findCellById(checkedRadioButtonId);
+					final Field usedField = board.findCellById(checkedRadioButtonId);
 
 					// hvis så, frigi tallet
-					if (usedCell != null) {
-						setButtonViewState(usedCell.getId(),true);
-						int field = board.getField(usedCell);
-						if (field >= 0)
-							squareAdapters.get(field).redrawField(board);
-						board.freeCell(usedCell);
+					if (usedField != null) {
+						setButtonViewState(usedField.getId(),true);
+						int square = board.getSquare(usedField);
+						if (square >= 0)
+							squareAdapters.get(square).redrawField(board);
+						board.freeCell(usedField);
 					}
 
 					// Finnes cellen fra før ?
-					if (destinationCell != null) {
-						if (destinationCell.getId() != null) {
+					if (destinationField != null) {
+						if (destinationField.getId() != null) {
 
 							// frigi tallet som er i denne cella
-							setButtonViewState(destinationCell.getId(),true);
+							setButtonViewState(destinationField.getId(),true);
 
-							destinationCell.setValue(verdi);
+							destinationField.setValue(verdi);
 						}
 					} else {
-						board.storeFieldCell(adapter.getSquarePosition(), position, new Cell(verdi, false, checkedRadioButtonId));
+						board.storeFieldCell(adapter.getSquarePosition(), position, new Field(verdi, false, checkedRadioButtonId));
 					}
 					setButtonViewState(checkedRadioButtonId, false);
 					adapter.redrawField(board);
@@ -134,6 +130,7 @@ public class BoardFragment extends Fragment {
 	private static final String AD_UNIT_ID = "ca-app-pub-9396891120929103/5003937078";
 
 	List<SquareGridView> squareList;
+	List<RadioButton> tiles;
 
 	@AfterViews
 	protected void init() {
@@ -207,21 +204,20 @@ public class BoardFragment extends Fragment {
 	}
 
 	private void initializeTiles(List<Integer> availablePieces) {
-		tile1.setText(availablePieces.get(0) + "");
-		tile2.setText(availablePieces.get(1) + "");
-		tile3.setText(availablePieces.get(2) + "");
-		tile4.setText(availablePieces.get(3) + "");
-		tile5.setText(availablePieces.get(4) + "");
-		tile6.setText(availablePieces.get(5) + "");
-		tile7.setText(availablePieces.get(6) + "");
+		tiles = new ArrayList<RadioButton>();
+		tiles.add(tile1);
+		tiles.add(tile2);
+		tiles.add(tile3);
+		tiles.add(tile4);
+		tiles.add(tile5);
+		tiles.add(tile6);
+		tiles.add(tile7);
 
-		tile1.setVisibility(View.VISIBLE);
-		tile2.setVisibility(View.VISIBLE);
-		tile3.setVisibility(View.VISIBLE);
-		tile4.setVisibility(View.VISIBLE);
-		tile5.setVisibility(View.VISIBLE);
-		tile6.setVisibility(View.VISIBLE);
-		tile7.setVisibility(View.VISIBLE);
+		int i = 0;
+		for (RadioButton radioButton : tiles) {
+			radioButton.setText(Integer.toString(availablePieces.get(i++)));
+			radioButton.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void initializeBoard(List<Integer> boardNumbers) {
