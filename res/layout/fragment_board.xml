@@ -197,6 +197,24 @@
                         android:layout_margin="20dp"
                         android:background="@drawable/button_submit_gradient"/>
             </RelativeLayout>
+			<RelativeLayout
+					android:id="@+id/statuses"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:paddingTop="5pt"
+					android:layout_below="@id/buttons">
+				<TextView
+						android:text=""
+						android:textColor="@android:color/black"
+						android:textSize="8pt"
+						android:id="@+id/statusText"
+						android:maxLines="2"
+						android:singleLine="false"
+
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"/>
+			</RelativeLayout>
         </RelativeLayout>
 
     </LinearLayout>

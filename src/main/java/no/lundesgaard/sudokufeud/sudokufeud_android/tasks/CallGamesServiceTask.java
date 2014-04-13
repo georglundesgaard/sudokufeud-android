@@ -21,12 +21,11 @@ public class CallGamesServiceTask extends BaseTask {
     public void initializeGame() {
 
 		if (state == null || !state.isFilled()) {
-			Log.e(Constants.TAG, "initializeGame: mangler state - henter spill");
-			GamesServiceClient gamesServiceClient = new GamesServiceClient();
+//			Log.e(Constants.TAG, "initializeGame: mangler state - henter spill");
+//			GamesServiceClient gamesServiceClient = new GamesServiceClient();
 
-			Game game = gamesServiceClient.getGame();
+//			Game game = gamesServiceClient.getGame();
 
-			updateUi(new GameFetchedEvent(game));
 		} else {
 			Log.e(Constants.TAG, "initializeGame: har state - henter IKKE spill");
 		}

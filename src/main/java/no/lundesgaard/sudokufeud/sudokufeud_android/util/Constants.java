@@ -10,4 +10,8 @@ public class Constants {
 
 	public static final int NUMBER_OF_CELLS = BOARD_WIDTH * BOARD_HEIGHT;
 	public static String TAG = "no.gih";
+
+	public static final String ISO_CHARSETNAME = "ISO-8859-1";
+
 }
+

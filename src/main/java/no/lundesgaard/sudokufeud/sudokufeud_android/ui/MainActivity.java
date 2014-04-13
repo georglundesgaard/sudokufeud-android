@@ -36,6 +36,12 @@ public class MainActivity extends Activity {
 					Log.w(Constants.TAG, "onCreate: savedState var tom/manglet");
 			}
 		}
+
+		if (state == null)
+			state = new State();
+
+		InitTask initTask = new InitTask();
+		initTask.execute(state);
 	}
 
 	@Override

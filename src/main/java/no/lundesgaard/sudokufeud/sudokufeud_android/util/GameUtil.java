@@ -6,7 +6,7 @@ import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
 import java.util.List;
 
 public class GameUtil {
-
+/*
     private GamesServiceClient gamesServiceClient;
 
     public GameUtil() {
@@ -17,4 +17,5 @@ public class GameUtil {
         Game game = gamesServiceClient.getGame();
         return game.getBoard();
     }
+*/
 }

@@ -10,13 +10,24 @@ import java.util.List;
 public class SavedState implements Serializable {
 	private Board board = null;
 	List<Integer> availablePieces = null;
+	public String gameId;
+	public String opponent;
+	public String state;
+	public String status;
+	public String currentPlayer;
+	public String difficulty;
+	public String mainPlayerAuth;
+
+// Todo: Fjern dette før release
+	public boolean isOriginalPlayer;
+	public String otherPlayerAuth;
+
 
 	public SavedState() {
 		Log.i(Constants.TAG, "SavedState contructed");
 	}
 
 	public Board getBoard() {
-		Log.i(Constants.TAG, "getBoard called. board=" + board);
 		return board;
 	}
 
@@ -42,6 +53,11 @@ public class SavedState implements Serializable {
 		return "SavedState{" +
 				"board=" + board +
 				", availablePieces=" + availablePieces +
+				", opponent='" + opponent + '\'' +
+				", state='" + state + '\'' +
+				", status='" + status + '\'' +
+				", currentPlayer='" + currentPlayer + '\'' +
+				", difficulty='" + difficulty + '\'' +
 				'}';
 	}
 }

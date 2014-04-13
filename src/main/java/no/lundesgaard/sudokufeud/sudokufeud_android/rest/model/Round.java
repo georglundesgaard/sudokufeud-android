@@ -13,4 +13,11 @@ public class Round {
     public void setMoves(List<Move> moves) {
         this.moves = moves;
     }
+
+	@Override
+	public String toString() {
+		return "Round{" +
+				"moves=" + moves +
+				'}';
+	}
 }

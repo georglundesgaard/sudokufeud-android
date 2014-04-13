@@ -9,11 +9,14 @@ import android.widget.*;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 import no.lundesgaard.sudokufeud.sudokufeud_android.State;
 import no.lundesgaard.sudokufeud.sudokufeud_android.adapters.SquareAdapter;
+import no.lundesgaard.sudokufeud.sudokufeud_android.events.FetcheGameEvent;
 import no.lundesgaard.sudokufeud.sudokufeud_android.events.GameFetchedEvent;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Board;
 import no.lundesgaard.sudokufeud.sudokufeud_android.model.Field;
+import no.lundesgaard.sudokufeud.sudokufeud_android.rest.GamesServiceClient;
 import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Game;
-import no.lundesgaard.sudokufeud.sudokufeud_android.tasks.CallGamesServiceTask;
+import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Move;
+import no.lundesgaard.sudokufeud.sudokufeud_android.rest.model.Round;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.BusProvider;
 import no.lundesgaard.sudokufeud.sudokufeud_android.util.Constants;
 import no.lundesgaard.sudokufeud.sudokufeud_android.views.SquareGridView;
@@ -45,16 +48,22 @@ public class BoardFragment extends Fragment {
 	RelativeLayout notBoard;
 
 	@ViewById
+	Button buttonSubmit;
+
+	@ViewById
 	RadioGroup radioGroupTiles;
 //    RelativeRadioGroup radioGroupTiles;
+
+	@ViewById
+	TextView statusText;
 
 	List<SquareAdapter> squareAdapters;
 
 	@Bean
 	State state;
 
-	@Bean
-	CallGamesServiceTask callGamesServiceTask;
+//	@Bean
+//	CallGamesServiceTask callGamesServiceTask;
 
 	/**
 	 * The view to show the ad.
@@ -64,54 +73,62 @@ public class BoardFragment extends Fragment {
 	private OnItemClickListener onFieldClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 			int checkedRadioButtonId = radioGroupTiles.getCheckedRadioButtonId();
+
+			final Board board = state.getBoard();
+			final SquareAdapter adapter = (SquareAdapter) adapterView.getAdapter();
+			final Field destinationField = board.getField(adapter.getSquarePosition(), position);
+
 			if (checkedRadioButtonId != -1) {
-				final SquareAdapter adapter = (SquareAdapter) adapterView.getAdapter();
 				RadioButton checkedRadioButton = (RadioButton) getActivity().findViewById(checkedRadioButtonId);
 				final Integer verdi = Integer.parseInt(checkedRadioButton.getText().toString());
-				final Board board = state.getBoard();
 
-				final Field destinationField = board.getField(adapter.getSquarePosition(), position);
 
-				// ikke lov å skrive til en låst celle
+				// se om denne id'en er brukt andre steder
+				final Field usedField = board.findCellById(checkedRadioButtonId);
+
+				// ikke lov å skrive til et låst field
 				if (destinationField == null || !destinationField.isLocked()) {
 
-					// se om denne id'en er brukt andre steder
-					final Field usedField = board.findCellById(checkedRadioButtonId);
 
-					// hvis så, frigi tallet
+					// hvis id'en er i bruk, frigi tallet, så lenge det ikke er samme tall som skal plasseres
 					if (usedField != null) {
-						setButtonViewState(usedField.getId(),true);
 						int square = board.getSquare(usedField);
+						board.freeCell(usedField);
 						if (square >= 0)
 							squareAdapters.get(square).redrawField(board);
-						board.freeCell(usedField);
+						if (destinationField == null || !usedField.getId().equals(destinationField.getId()))
+							setButtonViewState(usedField.getId(),true);
 					}
 
 					// Finnes cellen fra før ?
 					if (destinationField != null) {
 						if (destinationField.getId() != null) {
 
-							// frigi tallet som er i denne cella
-							setButtonViewState(destinationField.getId(),true);
+							// frigi tallet som er i dette fieldet, så lenge det ikke er samme tall som skal plasseres
+
+							if (!destinationField.getId().equals(checkedRadioButtonId))
+								setButtonViewState(destinationField.getId(),true);
 
 							destinationField.setValue(verdi);
+							destinationField.setId(checkedRadioButtonId);
 						}
 					} else {
 						board.storeFieldCell(adapter.getSquarePosition(), position, new Field(verdi, false, checkedRadioButtonId));
 					}
 					setButtonViewState(checkedRadioButtonId, false);
 					adapter.redrawField(board);
-//					initializeBoard(board);
 				}
-/*					final Cell usedCell = board.findCellById(checkedRadioButtonId);
+				radioGroupTiles.clearCheck();
+			} else {
+				// Klikk uten at en radiobutton (tile) er valgt
+				if (destinationField != null && !destinationField.isLocked()) {
+					// Det er noe i cella, og det er ikke låst, da frigir vi det
+					board.freeCell(destinationField);
+					adapter.redrawField(board);
+					if (destinationField.getId() != null)
+						setButtonViewState(destinationField.getId(), true);
+				}
 
-
-				boolean updated = adapter.setField(position,
-						Integer.parseInt(verdi));
-
-				if (updated)
-					checkedRadioButton.setVisibility(View.GONE);
-*/
 			}
 		}
 	};
@@ -156,10 +173,38 @@ public class BoardFragment extends Fragment {
 
 		createAd();
 
+		buttonSubmit.setOnClickListener(submitOnClickListener);
+
 		if (state != null && state.isFilled())
 			initializeBoard(state.getBoard());
 		else
 			Log.d(Constants.TAG,"BoardFragment init() har state!");
+	}
+
+	private View.OnClickListener submitOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			Log.e(Constants.TAG, "buttonSubmit kallt");
+			List<Move> moves = beregnMoves(state.getBoard());
+			Round round = new Round();
+			round.setMoves(moves);
+
+			(new GamesServiceClient()).playRound(state.isOriginalPlayer ? state.mainPlayerAuth : state.otherPlayerAuth,
+					state.gameId,round);
+		}
+	};
+
+	private List<Move> beregnMoves(Board board) {
+		List<Move> moves = new ArrayList<Move>();
+
+		for (int x = 0; x < Constants.BOARD_WIDTH; x++)
+			for (int y = 0; y < Constants.BOARD_HEIGHT; y++) {
+				final Field field = board.getCell(x, y);
+				if (field != null && !field.isLocked())
+					moves.add(new Move(x,y,field.getValue()));
+			}
+
+		return moves;
 	}
 
 	private void createAd() {
@@ -189,6 +234,15 @@ public class BoardFragment extends Fragment {
 	}
 
 	@Subscribe
+	public void handleFetcheGame(FetcheGameEvent fetcheGameEvent) {
+		Log.d(Constants.TAG,"handleFetcheGame kallt");
+
+		(new GamesServiceClient()).getGame(state.isOriginalPlayer ? state.otherPlayerAuth : state.mainPlayerAuth,
+				state.gameId);
+		state.isOriginalPlayer = !state.isOriginalPlayer;
+	}
+
+	@Subscribe
 	public void handleGameFetched(GameFetchedEvent gameFetchedEvent) {
 		Game game = gameFetchedEvent.getGame();
 
@@ -196,11 +250,25 @@ public class BoardFragment extends Fragment {
 			initializeBoard(game.getBoard());
 
 			state.setAvailablePieces(game.getAvailablePieces());
+			state.gameId = game.getId();
+			state.opponent = game.getOpponentUserId();
+			state.difficulty = game.getDifficulty();
+			state.status = game.getStatus();
+			state.currentPlayer = game.getCurrentPlayer();
 
+			oppdaterStatusText(state);
 			initializeTiles(game.getAvailablePieces());
 		} else {
-			// todo: Klag på Georg
+			// todo: si ifra til brukeren om at lasting feilet
 		}
+	}
+
+	private void oppdaterStatusText(State state) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(state.currentPlayer).append("\n");
+		sb.append(state.status);
+		statusText.setText(sb.toString());
+
 	}
 
 	private void initializeTiles(List<Integer> availablePieces) {
@@ -247,8 +315,8 @@ public class BoardFragment extends Fragment {
 
 		if (state != null && state.isFilled())
 			initializeBoard(state.getBoard());
-		else
-			callGamesServiceTask.initializeGame();
+//		else
+//			callGamesServiceTask.initializeGame();
 
 		if (adView != null) {
 			adView.resume();

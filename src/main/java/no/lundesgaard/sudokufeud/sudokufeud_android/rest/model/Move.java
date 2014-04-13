@@ -34,4 +34,13 @@ public class Move {
     public void setPiece(int piece) {
         this.piece = piece;
     }
+
+	@Override
+	public String toString() {
+		return "Move{" +
+				"x=" + x +
+				", y=" + y +
+				", piece=" + piece +
+				'}';
+	}
 }

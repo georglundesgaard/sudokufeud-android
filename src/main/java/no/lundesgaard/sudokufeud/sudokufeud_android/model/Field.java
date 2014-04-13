@@ -1,6 +1,8 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.model;
 
-public class Field {
+import java.io.Serializable;
+
+public class Field implements Serializable {
 	private Integer value;
 	private boolean locked;
 	private Integer id;
@@ -10,13 +12,13 @@ public class Field {
 		this.locked = locked;
 		this.id = id;
 	}
-
+/*
 	public Field(Integer value) {
 		this.value = value;
 		this.locked = false;
 		this.id = null;
 	}
-
+*/
 	public Integer getValue() {
 		return value;
 	}
@@ -33,10 +35,14 @@ public class Field {
 		this.value = value;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (o == null || super.getClass() != o.getClass()) return false;
 
 		Field field = (Field) o;
 
@@ -53,5 +59,14 @@ public class Field {
 		result = 31 * result + (locked ? 1 : 0);
 		result = 31 * result + (id != null ? id.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Field{" +
+				"value=" + value +
+				", locked=" + locked +
+				", id=" + id +
+				'}';
 	}
 }
