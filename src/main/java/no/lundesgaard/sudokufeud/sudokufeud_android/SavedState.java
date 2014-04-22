@@ -14,6 +14,7 @@ public class SavedState implements Serializable {
 	public String opponent;
 	public String state;
 	public String status;
+	public int score;
 	public String currentPlayer;
 	public String difficulty;
 	public String mainPlayerAuth;
@@ -21,6 +22,7 @@ public class SavedState implements Serializable {
 // Todo: Fjern dette før release
 	public boolean isOriginalPlayer;
 	public String otherPlayerAuth;
+	public int opponentScore;
 
 
 	public SavedState() {

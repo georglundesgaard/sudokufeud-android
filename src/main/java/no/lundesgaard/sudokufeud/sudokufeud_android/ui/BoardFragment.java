@@ -75,6 +75,11 @@ public class BoardFragment extends Fragment {
 			int checkedRadioButtonId = radioGroupTiles.getCheckedRadioButtonId();
 
 			final Board board = state.getBoard();
+			if (board == null) {
+				errorMessage("Internal fault, no board");
+				return;
+			}
+
 			final SquareAdapter adapter = (SquareAdapter) adapterView.getAdapter();
 			final Field destinationField = board.getField(adapter.getSquarePosition(), position);
 
@@ -132,6 +137,9 @@ public class BoardFragment extends Fragment {
 			}
 		}
 	};
+
+	private void errorMessage(String msg) {
+	}
 
 	private void setButtonViewState(int id, boolean state) {
 		RadioButton radioButton = (RadioButton) getActivity().findViewById(id);
@@ -255,6 +263,8 @@ public class BoardFragment extends Fragment {
 			state.difficulty = game.getDifficulty();
 			state.status = game.getStatus();
 			state.currentPlayer = game.getCurrentPlayer();
+			state.score = game.getScore();
+			state.opponentScore = game.getOpponentScore();
 
 			oppdaterStatusText(state);
 			initializeTiles(game.getAvailablePieces());
@@ -265,10 +275,9 @@ public class BoardFragment extends Fragment {
 
 	private void oppdaterStatusText(State state) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(state.currentPlayer).append("\n");
-		sb.append(state.status);
+		sb.append(state.currentPlayer).append(":").append(state.score).append("\n");
+		sb.append(state.opponent).append(":").append(state.opponentScore).append("\n");
 		statusText.setText(sb.toString());
-
 	}
 
 	private void initializeTiles(List<Integer> availablePieces) {
@@ -283,8 +292,11 @@ public class BoardFragment extends Fragment {
 
 		int i = 0;
 		for (RadioButton radioButton : tiles) {
-			radioButton.setText(Integer.toString(availablePieces.get(i++)));
-			radioButton.setVisibility(View.VISIBLE);
+			if (i < availablePieces.size()) {
+				radioButton.setText(Integer.toString(availablePieces.get(i++)));
+				radioButton.setVisibility(View.VISIBLE);
+			} else
+				radioButton.setVisibility(View.GONE);
 		}
 	}
 
