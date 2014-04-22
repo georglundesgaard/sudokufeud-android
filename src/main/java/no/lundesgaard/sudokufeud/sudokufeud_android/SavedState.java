@@ -18,6 +18,7 @@ public class SavedState implements Serializable {
 	public String currentPlayer;
 	public String difficulty;
 	public String mainPlayerAuth;
+	public int widthPixels;
 
 // Todo: Fjern dette før release
 	public boolean isOriginalPlayer;

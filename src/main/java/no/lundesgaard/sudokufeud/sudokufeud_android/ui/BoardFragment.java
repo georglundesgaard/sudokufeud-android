@@ -172,7 +172,7 @@ public class BoardFragment extends Fragment {
 
 		squareAdapters = new ArrayList<SquareAdapter>();
 		for (int i = 0; i < Constants.NUMBER_OF_SQUARES; i++) {
-			final SquareAdapter squareAdapter = new SquareAdapter(getActivity(),i);
+			final SquareAdapter squareAdapter = new SquareAdapter(getActivity(),i, state.widthPixels);
 			squareAdapters.add(squareAdapter);
 			final SquareGridView squareGridView = squareList.get(i);
 			squareGridView.setAdapter(squareAdapter);

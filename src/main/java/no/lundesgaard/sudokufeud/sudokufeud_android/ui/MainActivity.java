@@ -1,6 +1,7 @@
 package no.lundesgaard.sudokufeud.sudokufeud_android.ui;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import no.lundesgaard.sudokufeud.sudokufeud_android.R;
 
@@ -40,6 +41,13 @@ public class MainActivity extends Activity {
 		if (state == null)
 			state = new State();
 
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		state.widthPixels = metrics.widthPixels;
+/*		Log.d(Constants.TAG,"xdpi = " + metrics.xdpi);
+		Log.d(Constants.TAG,"ydpi = " + metrics.ydpi);
+		Log.d(Constants.TAG,"widthPixels = " + metrics.widthPixels);
+		Log.d(Constants.TAG,"heightPixels = " + metrics.heightPixels);
+*/
 		InitTask initTask = new InitTask();
 		initTask.execute(state);
 	}

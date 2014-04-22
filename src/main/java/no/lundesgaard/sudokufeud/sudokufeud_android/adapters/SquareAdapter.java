@@ -16,11 +16,13 @@ public class SquareAdapter extends BaseAdapter {
 
     private Context context;
 	private int squarePosition;
+	private int widthPixels;
 	private Board board;
 
-	public SquareAdapter(Context context, int squarePosition) {
+	public SquareAdapter(Context context, int squarePosition, int widthPixels) {
 		this.context = context;
 		this.squarePosition = squarePosition;
+		this.widthPixels = widthPixels;
 	}
 
 	public int getSquarePosition() {
@@ -54,7 +56,7 @@ public class SquareAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.field, null);
             viewHolder.textView = (TextView) convertView.findViewById(R.id.field);
-            viewHolder.textView.setLayoutParams(new GridView.LayoutParams(100, 100));
+            viewHolder.textView.setLayoutParams(new GridView.LayoutParams((widthPixels/100)*10, (widthPixels/100)*10));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
